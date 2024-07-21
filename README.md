@@ -1,163 +1,166 @@
-### Detailed README.md for "SP500 Data Scraper and Analyzer"
+### Detailed README.md
 
-```markdown
-# SP500 Data Scraper and Analyzer
+# S&P 500 Stock Analysis and Visualization
 
-## Overview
+This project automates the process of retrieving and analyzing financial data for the top 50 companies in the S&P 500 index. It scrapes data from multiple financial websites, performs various calculations, and generates visualizations to provide insights into stock performance. The project also identifies companies with a "Buy" analyst rating, making it a valuable tool for investment decision-making.
 
-This project is designed to scrape and analyze financial data for the top 50 companies in the S&P 500. The data is sourced from Yahoo Finance and MarketBeat, and includes various financial metrics, analyst ratings, and historical stock prices. The results are saved in Excel files and visualized through plots.
+## Table of Contents
+
+1. [Project Overview](#project-overview)
+2. [Features](#features)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Data Scraping Details](#data-scraping-details)
+6. [Data Processing](#data-processing)
+7. [Visualization](#visualization)
+8. [Output Files](#output-files)
+9. [Directory Structure](#directory-structure)
+10. [Contributing](#contributing)
+11. [License](#license)
+
+## Project Overview
+
+This project scrapes and analyzes financial data for the top 50 companies in the S&P 500 index. It retrieves data from Yahoo Finance and MarketBeat, calculates various metrics such as P/E ratios, and generates visualizations of stock prices. Additionally, it identifies companies with a "Buy" analyst rating and saves the data for further analysis.
 
 ## Features
 
-- **Scrape S&P 500 Data**: Retrieve the ticker symbols and company names of the top 50 stocks in the S&P 500.
-- **Fetch Financial Data from Yahoo Finance**:
+- Scrapes ticker symbols and company names of the top 50 S&P 500 stocks from SlickCharts.
+- Retrieves detailed financial data from Yahoo Finance, including:
   - Country
   - Industry
   - Stock Exchange
-  - Forward P/E and P/E Difference
-  - Daily closing prices for all of 2023
-- **Fetch Data from MarketBeat**:
+  - Forward P/E Difference
+  - Daily closing prices for the year 2023
+- Scrapes MarketBeat for:
+  - Analyst rating
+  - Upside/Downside potential
+  - News sentiment
+- Calculates the difference between forward and trailing P/E ratios.
+- Generates plots for daily closing prices of stocks within the same industry.
+- Identifies companies with a "Buy" analyst rating and saves this data separately.
+- Outputs data to Excel files and saves plots as PNG images.
+
+## Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/yourusername/sp500-stock-analysis.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+   cd sp500-stock-analysis
+   ```
+3. Install the required Python packages:
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+## Usage
+
+1. Run the main script to scrape data, calculate metrics, and generate plots:
+
+   ```sh
+   python main.py
+   ```
+2. The script will perform the following tasks:
+
+   - Scrape S&P 500 data from SlickCharts.
+   - Retrieve financial data from Yahoo Finance.
+   - Scrape MarketBeat for analyst ratings and news sentiment.
+   - Calculate the difference between forward and trailing P/E ratios.
+   - Generate plots for daily closing prices by industry.
+   - Identify companies with a "Buy" analyst rating and save the data to an Excel file.
+
+## Data Scraping Details
+
+### SlickCharts
+
+- URL: https://www.slickcharts.com/sp500
+- Data Scraped: Ticker symbols and company names of the top 50 S&P 500 companies.
+
+### Yahoo Finance
+
+- Profile URL Example: https://ca.finance.yahoo.com/quote/{ticker}/profile
+- Data Scraped:
+
+  - Country
+  - Industry
+  - Stock Exchange
+- Statistics URL Example: https://finance.yahoo.com/quote/{ticker}/key-statistics
+- Data Scraped:
+
+  - Forward P/E
+  - Trailing P/E
+  - P/E Difference (Forward P/E - Trailing P/E)
+- Historical Data URL Example: https://ca.finance.yahoo.com/quote/{ticker}/history
+- Data Scraped: Daily closing prices for the year 2023
+
+### MarketBeat
+
+- URL Example: https://www.marketbeat.com/stocks/{exchange}/{ticker}/
+- Data Scraped:
   - Analyst Rating
-  - Upside/Downside
+  - Upside/Downside Potential
   - News Sentiment
-- **Data Analysis**:
-  - Combine data from Yahoo Finance and MarketBeat
-  - Filter and save data for stocks with "Buy" ratings
-  - Plot daily closing prices for each industry, highlighting maximum and minimum prices
-- **Save Results**:
-  - Combined data saved to `combined_data.xlsx`
-  - Filtered "Buy" ratings saved to `buy_ratings.xlsx`
-  - Plots saved in the `plots/` directory
 
-## Setup and Installation
+## Data Processing
 
-### Prerequisites
+1. **Calculating P/E Difference**:
+   - The difference between Forward P/E and Trailing P/E is calculated for each stock.
+2. **Filtering for "Buy" Ratings**:
+   - The project identifies companies with an analyst rating of "Buy" and saves this data separately.
 
-- Python 3.x
-- `pip` (Python package installer)
+## Visualization
 
-### Clone the Repository
+1. **Plotting Daily Closing Prices**:
+   - The script generates plots for daily closing prices for each industry.
+   - Each plot includes annotations for the maximum and minimum prices.
 
-```bash
-git clone https://github.com/yourusername/sp500-data-scraper-analyzer.git
-cd sp500-data-scraper-analyzer
-```
+## Output Files
 
-### Install Dependencies
+The script generates the following output files:
 
-```bash
-pip install -r requirements.txt
-```
+1. **combined_data.xlsx**: Contains the scraped data and calculated metrics for all top 50 S&P 500 companies.
+2. **buy_ratings.xlsx**: Lists companies with a "Buy" analyst rating, along with relevant metrics.
+3. **plots/**: Directory containing PNG plots of daily closing prices for each industry.
 
-### Directory Structure
+## Directory Structure
 
-```
-sp500-data-scraper-analyzer/
-├── main.py
-├── requirements.txt
+sp500-stock-analysis/
 ├── plots/
+│   ├── Consumer_Electronics_prices.png
+│   ├── Internet_Content_&_Information_prices.png
+│   ├── Internet_Retail_prices.png
+│   ├── Semiconductors_prices.png
+│   └── ... (more plots)
 ├── combined_data.xlsx
 ├── buy_ratings.xlsx
+├── main.py
+├── requirements.txt
 └── README.md
-```
-
-### Usage
-
-Run the main script:
-
-```bash
-python main.py
-```
-
-This will scrape the data, save it to Excel files, and generate plots.
-
-## Detailed Workflow
-
-### 1. Scrape S&P 500 Data
-
-The `scrape_sp500()` function scrapes the top 50 S&P 500 companies from [SlickCharts](https://www.slickcharts.com/sp500). It extracts the ticker symbols and company names.
-
-### 2. Fetch Data from Yahoo Finance
-
-The `scrape_yahoo_finance(ticker)` function fetches the following data for a given ticker:
-
-- **Profile Data**: Country, Industry, Stock Exchange
-- **Statistics Data**: Forward P/E and P/E Difference
-- **Historical Data**: Daily closing prices for 2023
-
-### 3. Fetch Data from MarketBeat
-
-The `scrape_marketbeat_data(ticker, exchange)` function retrieves:
-
-- Analyst Rating
-- Upside/Downside
-- News Sentiment
-
-### 4. Data Analysis and Visualization
-
-- **Combine Data**: Data from Yahoo Finance and MarketBeat is combined into a single DataFrame.
-- **Filter "Buy" Ratings**: Stocks with "Buy" ratings are filtered and saved to `buy_ratings.xlsx`.
-- **Plot Prices**: Daily closing prices for each industry are plotted, with annotations for maximum and minimum prices. Plots are saved in the `plots/` directory.
-
-### 5. Save Results
-
-- Combined data is saved to `combined_data.xlsx`.
-- Filtered "Buy" ratings are saved to `buy_ratings.xlsx`.
-
-## Example Output
-
-### Combined Data
-
-The combined data is saved in `combined_data.xlsx`. Here are the first few rows:
-
-| Ticker | Company Name    | Industry   | Forward P/E | P/E Difference | Exchange | Analyst Rating | Upside/Downside | News Sentiment | Prices                    |
-| ------ | --------------- | ---------- | ----------- | -------------- | -------- | -------------- | --------------- | -------------- | ------------------------- |
-| AAPL   | Apple Inc.      | Technology | 30.12       | 1.50           | NASDAQ   | Buy            | 5.3% Upside     | Positive       | DataFrame with price data |
-| MSFT   | Microsoft Corp. | Technology | 28.05       | 1.80           | NASDAQ   | Buy            | 6.1% Upside     | Positive       | DataFrame with price data |
-| ...    | ...             | ...        | ...         | ...            | ...      | ...            | ...             | ...            | ...                       |
-
-### "Buy" Ratings
-
-The filtered "Buy" ratings are saved in `buy_ratings.xlsx`. Here are the first few rows:
-
-| Company Name    | Analyst Rating | Upside/Downside | News Sentiment | P/E Difference |
-| --------------- | -------------- | --------------- | -------------- | -------------- |
-| Apple Inc.      | Buy            | 5.3% Upside     | Positive       | 1.50           |
-| Microsoft Corp. | Buy            | 6.1% Upside     | Positive       | 1.80           |
-| ...             | ...            | ...             | ...            | ...            |
-
-### Plots
-
-Plots of daily closing prices for each industry are saved in the `plots/` directory. Each plot is titled `Daily Closing Prices for [Industry] Stocks (2023)` and includes annotations for the maximum and minimum prices.
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request.
+Contributions are welcome! Please follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch: `git checkout -b feature-branch`.
+3. Make your changes and commit them: `git commit -m 'Add some feature'`.
+4. Push to the branch: `git push origin feature-branch`.
+5. Submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License.
-
-```
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ### Additional Files
 
-### `.gitignore`
+1. **requirements.txt**
 
-```plaintext
-__pycache__/
-*.py[cod]
-*.xlsx
-plots/
-.env
-```
+   ```txt
+   requests
+   beautifulsoup4
+   pandas
+   matplotlib
 
-### `requirements.txt`
-
-```plaintext
-requests
-beautifulsoup4
-pandas
-matplotlib
-openpyxl
-```
+2. **main.py**
