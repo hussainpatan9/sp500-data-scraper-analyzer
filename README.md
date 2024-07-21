@@ -126,6 +126,7 @@ The script generates the following output files:
 
 ## Directory Structure
 
+```sh
 sp500-stock-analysis/
 ├── plots/
 │   ├── Consumer_Electronics_prices.png
@@ -138,7 +139,7 @@ sp500-stock-analysis/
 ├── main.py
 ├── requirements.txt
 └── README.md
-
+```
 ## Contributing
 
 Contributions are welcome! Please follow these steps to contribute:
